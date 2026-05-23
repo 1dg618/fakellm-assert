@@ -15,6 +15,14 @@ expect(resp).satisfies("apologizes for the delay and offers a solution")
 
 `resp` can be a raw string, an OpenAI `ChatCompletion`, or an Anthropic `Message` — they're normalized automatically, with no SDK dependency.
 
+## A note on determinism
+
+`fakellm-assert` freezes verdicts about a *specific* response. That only buys you a deterministic test suite if the response itself is deterministic — otherwise every run produces new text, the fingerprint never matches, and `replay` mode hard-errors on a permanent cache miss.
+
+So the response under test must be stable across runs. That's the job of the rest of the family: point your system-under-test at [`fakellm`](https://pypi.org/project/fakellm/) so each call replays a fixed response, and `fakellm-assert` freezes a verdict about that. **Mock the transport with `fakellm`, freeze the judgment with `fakellm-assert`** — together they make a fuzzy LLM pipeline reproducible end to end.
+
+If your SUT calls a live model, expect misses. `--fakellm-update` will still let you judge and freeze a one-off verdict, but it'll go stale the next time the model's output drifts — which is the tool working as intended, not a bug.
+
 ## The matcher cascade
 
 Climb only as high as you need. Lower rungs are cheaper and more deterministic; most assertions resolve on the bottom one.
