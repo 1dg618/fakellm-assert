@@ -9,7 +9,7 @@ description = "Deterministic semantic assertions for LLM tests. Freeze a judge's
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [{ name = "fakellm" }]
+authors = [{ name = "Douglas Gregor", email = "1dg618@gmail.com" }]
 keywords = ["llm", "testing", "assertions", "mock", "fakellm", "pytest", "llm-as-judge"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -25,8 +25,8 @@ dependencies = []
 dev = ["pytest>=7.0"]
 
 [project.urls]
-Homepage = "https://github.com/fakellm/fakellm-assert"
-"Bug Tracker" = "https://github.com/fakellm/fakellm-assert/issues"
+Homepage = "https://github.com/1dg618/fakellm-assert"
+"Bug Tracker" = "https://github.com/1dg618/fakellm-assert/issues"
 
 # Auto-activate the pytest plugin when installed.
 [project.entry-points.pytest11]
