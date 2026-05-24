@@ -1,5 +1,8 @@
 # fakellm-assert
 
+[![PyPI](https://img.shields.io/pypi/v/fakellm-assert.svg)](https://pypi.org/project/fakellm-assert/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Deterministic semantic assertions for LLM tests. Part of the [fakellm](https://pypi.org/project/fakellm/) family.
 
 Mocking the transport is the easy part of testing LLM apps — `fakellm` already does that. The hard part is asserting on output that's fuzzy by nature ("does the response apologize?", "did it call the right tool?"). `fakellm-assert` gives you a matcher API for exactly that, and keeps your test suite **deterministic and offline** by freezing any judge verdict once and replaying it forever.
@@ -14,6 +17,20 @@ expect(resp).satisfies("apologizes for the delay and offers a solution")
 ```
 
 `resp` can be a raw string, an OpenAI `ChatCompletion`, or an Anthropic `Message` — they're normalized automatically, with no SDK dependency.
+
+## Installation
+
+```bash
+pip install fakellm-assert
+```
+
+Requires Python 3.9+. The pytest plugin auto-activates on install — no extra configuration needed to run in `replay` mode. To freeze new verdicts you'll also want to wire up a judge (see [pytest usage](#pytest-usage)); that's the only place an LLM SDK enters the picture, and it's your choice of one.
+
+For a fully reproducible pipeline, pair it with [`fakellm`](https://pypi.org/project/fakellm/) to mock the transport (see [A note on determinism](#a-note-on-determinism)):
+
+```bash
+pip install fakellm fakellm-assert
+```
 
 ## A note on determinism
 
